@@ -26,7 +26,7 @@ export default function About() {
               <div className="about-img-bg" />
               <img
                 src="/hero_avatar.png"
-                alt="Reetu Dhakal"
+                alt="Ritu Dhakal"
                 className="about-img-main"
               />
             </div>
@@ -47,7 +47,7 @@ export default function About() {
             </motion.h2>
             <motion.p className="section-desc" variants={fadeUp}>
               I'm Ritu Dhakal, a motivated BSc CSIT student and aspiring Full-Stack Developer from Nepal. 
-              I enjoy building elegant, high-performance web applications that blend creativity with technology. 
+              I enjoy building elegant, high performance web applications that blend creativity with technology. 
               Whether it's designing intuitive user interfaces, developing scalable solutions, or exploring cybersecurity concepts, 
               I'm driven by a desire to learn, innovate, and create meaningful digital experiences.
             </motion.p>
@@ -61,7 +61,10 @@ export default function About() {
               }}
             >
               <p>
-                Passionate about learning and building, I am constantly exploring new technologies and industry best practices. From developing responsive web applications to enhancing user experiences and understanding cybersecurity principles, I strive to create solutions that are both impactful and reliable. Every project is an opportunity to refine my skills, embrace new challenges, and move one step closer to becoming a well-rounded software developer.
+                Passionate about learning and building, I am constantly exploring new technologies and industry best practices. 
+                From developing responsive web applications to enhancing user experiences and understanding cybersecurity principles, 
+                I strive to create solutions that are both impactful and reliable. Every project is an opportunity to refine my skills, 
+                embrace new challenges, and move one step closer to becoming a well-rounded software developer.
               </p>
             </motion.p>
             {/* Stats */}

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download} from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 const fadeUp = (delay = 0) => ({
   initial:    { opacity: 0, y: 40 },
   animate:    { opacity: 1, y: 0 },
@@ -41,7 +42,7 @@ export default function Hero() {
                 className="social-icon"
                 aria-label="GitHub"
               >
-                <Github size={18} />
+                <FaGithub size={18} />
               </a>
               <a
                 href="https://www.linkedin.com/in/ritu-d-563669300/"
@@ -50,14 +51,14 @@ export default function Hero() {
                 className="social-icon"
                 aria-label="LinkedIn"
               >
-                <Linkedin size={18} />
+                <FaLinkedin size={18} />
               </a>
               <a
                 href="mailto:dhakalreetu05@gmail.com"
                 className="social-icon"
                 aria-label="Email"
               >
-                <Mail size={18} />
+                {/* <FaMail size={18} /> */}
               </a>
             </motion.div>
           </div>

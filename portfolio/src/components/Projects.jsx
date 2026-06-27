@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
-
 const projects = [
   {
     title: "Complaint Management System",
@@ -28,17 +27,14 @@ const projects = [
     live:   "#",
   },
 ];
-
 const fadeUp = {
   hidden:  { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0 },
 };
-
 export default function Projects() {
   return (
     <section id="projects">
       <div className="container">
-
         <div className="projects-header">
           <motion.div
             initial="hidden"
@@ -53,9 +49,8 @@ export default function Projects() {
               Featured <span className="accent">Projects</span>
             </motion.h2>
           </motion.div>
-
           <motion.a
-            href="https://github.com/yourusername"
+            href="https://github.com/Reetu-Dhakal?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-outline"
@@ -68,7 +63,6 @@ export default function Projects() {
             <FaGithub size={15} /> All Projects
           </motion.a>
         </div>
-
         <div className="projects-grid">
           {projects.map((project, i) => (
             <motion.div
@@ -86,7 +80,6 @@ export default function Projects() {
                   {project.icon}
                 </span>
               </div>
-
               <div className="project-body">
                 {/* Tags */}
                 <div className="project-tags">
@@ -94,10 +87,8 @@ export default function Projects() {
                     <span key={tag} className="project-tag">{tag}</span>
                   ))}
                 </div>
-
                 <h3 className="project-title">{project.title}</h3>
                 <p className="project-desc">{project.desc}</p>
-
                 <div className="project-links">
                   <a
                     href={project.github}
@@ -124,7 +115,6 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   );
