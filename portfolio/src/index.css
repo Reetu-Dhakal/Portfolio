@@ -401,6 +401,9 @@ body::after {
   line-height: 1.6;
   max-width: 480px;
   text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  word-break: break-word;
 }
 .hero-actions {
   display: flex;
@@ -645,7 +648,6 @@ body::after {
 #skills{
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
   padding: 120px 0 80px;
   overflow: visible;
@@ -681,14 +683,12 @@ body::after {
 /* Header */
 
 .skills-header{
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+  text-align: left;
 }
 
 .skills-header .section-desc{
-    max-width:620px;
-    margin:15px auto 0;
+    max-width: 560px;
+    margin: 12px 0 0;
 }
 
 /* ==========================================

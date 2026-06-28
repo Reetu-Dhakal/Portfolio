@@ -6,7 +6,7 @@ const projects = [
     title: "Complaint Management System",
     desc:  "A full-featured web app for logging and tracking complaints. Users can submit, view, and manage complaints through an intuitive dashboard.",
     tags:  ["PHP", "MySQL", "HTML/CSS"],
-    icon:  "",
+    image: "/complaint-system.png",
     github: "#",
     live:   "#",
   },
@@ -14,7 +14,7 @@ const projects = [
     title: "Student Management System",
     desc:  "Desktop application for managing student records, attendance, and grades. Features CRUD operations and report generation.",
     tags:  ["Java", "MySQL", "Swing"],
-    icon:  "",
+    image: "/student-system.png",
     github: "#",
     live:   null,
   },
@@ -22,7 +22,7 @@ const projects = [
     title: "Developer Portfolio",
     desc:  "Personal portfolio website built with React showcasing projects, skills, and contact information with smooth animations.",
     tags:  ["React", "Vite", "Framer Motion"],
-    icon:  "",
+    image: "/developer-portfolio.png",
     github: "#",
     live:   "#",
   },
@@ -76,9 +76,11 @@ export default function Projects() {
             >
               {/* Image / Banner */}
               <div className="project-img">
-                <span style={{ position: "relative", zIndex: 1, fontSize: "4rem" }}>
-                  {project.icon}
-                </span>
+                <img 
+                  src={project.image} 
+                  alt={project.title} 
+                  style={{ width: "100%", height: "100%", objectFit: "cover", position: "relative", zIndex: 1 }} 
+                />
               </div>
               <div className="project-body">
                 {/* Tags */}
