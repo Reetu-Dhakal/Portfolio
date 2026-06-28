@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Download} from "lucide-react";
+import { ArrowRight, Download, Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 const fadeUp = (delay = 0) => ({
   initial:    { opacity: 0, y: 40 },
@@ -52,7 +52,7 @@ export default function Hero() {
                 className="social-icon"
                 aria-label="Gmail"
               >
-                {/* <FaMail size={18} /> */}
+                <Mail size={18} />
               </a>
             </motion.div>
           </div>

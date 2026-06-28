@@ -1,15 +1,15 @@
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: "10+", label: "Projects Built" },
-  { value: "15+", label: "Technologies" },
-  { value: "3+", label: "Years Learning" },
-  { value: "100%", label: "Passion & Drive" },
+  { value: "10+",  label: "Projects Built",    bar: 0.65 },
+  { value: "15+",  label: "Technologies",      bar: 0.80 },
+  { value: "3+",   label: "Years Learning",    bar: 0.50 },
+  { value: "100%", label: "Passion & Drive",   bar: 1.00 },
 ];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 },
+  hidden:  { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0  },
 };
 
 export default function About() {
@@ -64,7 +64,7 @@ export default function About() {
             </motion.div>
           </motion.div>
 
-          {/* RIGHT SIDE */}
+          {/* RIGHT SIDE — stat strip */}
           <motion.div
             className="about-info-grid"
             initial={{ opacity: 0, x: 50 }}
@@ -72,14 +72,27 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            {stats.map((s) => (
+            {stats.map((s, i) => (
               <motion.div
                 key={s.label}
                 className="info-chip"
-                whileHover={{ y: -8 }}
+                whileHover={{ x: 6 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <strong>{s.value}</strong>
-                <span>{s.label}</span>
+
+                <div className="info-chip-text">
+                  <span>{s.label}</span>
+                  <div className="info-chip-bar">
+                    <div
+                      className="info-chip-fill"
+                      style={{
+                        width: `${s.bar * 100}%`,
+                        animationDelay: `${i * 0.15 + 0.3}s`,
+                      }}
+                    />
+                  </div>
+                </div>
               </motion.div>
             ))}
           </motion.div>
