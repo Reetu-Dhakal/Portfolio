@@ -1,17 +1,31 @@
 import { motion } from "framer-motion";
+import {
+  FaHtml5,
+  FaCss3Alt,
+  FaReact,
+  FaNodeJs,
+  FaPhp,
+  FaPython,
+  FaJava,
+  FaGitAlt,
+  FaFigma,
+} from "react-icons/fa";
+
+import { SiJavascript, SiMysql, SiMongodb } from "react-icons/si";
+
 const skills = [
-  { name: "HTML5",       icon: "🌐", level: 90 },
-  { name: "CSS3",        icon: "🎨", level: 85 },
-  { name: "JavaScript",  icon: "⚡", level: 78 },
-  { name: "React",       icon: "⚛️",  level: 72 },
-  { name: "Node.js",     icon: "🟢", level: 65 },
-  { name: "PHP",         icon: "🐘", level: 68 },
-  { name: "MySQL",       icon: "🗄️",  level: 72 },
-  { name: "MongoDB",     icon: "🍃", level: 60 },
-  { name: "Python",      icon: "🐍", level: 65 },
-  { name: "Java",        icon: "☕", level: 63 },
-  { name: "Git",         icon: "🌿", level: 75 },
-  { name: "Figma",       icon: "✏️",  level: 60 },
+  { name: "HTML5", icon: <FaHtml5 color="#E34F26" />, level: 90 },
+  { name: "CSS3", icon: <FaCss3Alt color="#1572B6" />, level: 85 },
+  { name: "JavaScript", icon: <SiJavascript color="#F7DF1E" />, level: 78 },
+  { name: "React", icon: <FaReact color="#61DAFB" />, level: 72 },
+  { name: "Node.js", icon: <FaNodeJs color="#339933" />, level: 65 },
+  { name: "PHP", icon: <FaPhp color="#777BB4" />, level: 68 },
+  { name: "MySQL", icon: <SiMysql color="#4479A1" />, level: 72 },
+  { name: "MongoDB", icon: <SiMongodb color="#47A248" />, level: 60 },
+  { name: "Python", icon: <FaPython color="#3776AB" />, level: 65 },
+  { name: "Java", icon: <FaJava color="#ED8B00" />, level: 63 },
+  { name: "Git", icon: <FaGitAlt color="#F05032" />, level: 75 },
+  { name: "Figma", icon: <FaFigma color="#F24E1E" />, level: 60 },
 ];
 export default function Skills() {
   return (
