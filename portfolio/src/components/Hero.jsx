@@ -13,12 +13,6 @@ export default function Hero() {
         <div className="hero-grid">
           {/* ─── Left Text ─── */}
           <div>
-            <motion.div {...fadeUp(0.1)}>
-              <div className="hero-badge">
-                <span className="hero-badge-dot" />
-                Open to Opportunities
-              </div>
-            </motion.div>
             <motion.h1 className="hero-name" {...fadeUp(0.2)}>
               Hi, I'm{" "}
               <span className="serif-accent">Ritu Dhakal</span>
@@ -56,7 +50,7 @@ export default function Hero() {
               <a
                 href="mailto:dhakalreetu05@gmail.com"
                 className="social-icon"
-                aria-label="Email"
+                aria-label="Gmail"
               >
                 {/* <FaMail size={18} /> */}
               </a>
@@ -76,31 +70,6 @@ export default function Hero() {
                 className="hero-img"
               />
             </div>
-            {/* Floating stat cards */}
-            <motion.div
-              className="hero-float-card card-1"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-            >
-              <div className="float-card-icon pink">💻</div>
-              <div className="float-card-text">
-                <strong>10+ Projects</strong>
-                <span>Built &amp; deployed</span>
-              </div>
-            </motion.div>
-            <motion.div
-              className="hero-float-card card-2"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.0, duration: 0.5 }}
-            >
-              <div className="float-card-icon mint">🎓</div>
-              <div className="float-card-text">
-                <strong>BSc CSIT</strong>
-                <span>Fresher Developer</span>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </div>

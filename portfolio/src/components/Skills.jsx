@@ -52,6 +52,12 @@ export default function Skills() {
             <motion.div
               key={skill.name}
               className="skill-card"
+               animate={{ y: [0, -6, 0] }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2.8,
+                  ease: "easeInOut",
+                }}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}

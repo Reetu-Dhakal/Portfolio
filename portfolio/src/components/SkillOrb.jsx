@@ -11,7 +11,7 @@ const skills = [
 
 export default function SkillOrb() {
   return (
-    <div className="relative w-[400px] h-[400px] mx-auto">
+    <div className="relative w-100 h-100 mx-auto">
 
       {skills.map((skill,index)=>{
 
