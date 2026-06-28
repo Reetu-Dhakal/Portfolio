@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import {
+  FaLaptopCode,
   FaHtml5,
   FaCss3Alt,
   FaReact,
@@ -11,73 +12,207 @@ import {
   FaFigma,
 } from "react-icons/fa";
 
-import { SiJavascript, SiMysql, SiMongodb } from "react-icons/si";
+import {
+  SiJavascript,
+  SiMysql,
+  SiMongodb,
+} from "react-icons/si";
 
-const skills = [
-  { name: "HTML5", icon: <FaHtml5 color="#E34F26" />, level: 90 },
-  { name: "CSS3", icon: <FaCss3Alt color="#1572B6" />, level: 85 },
-  { name: "JavaScript", icon: <SiJavascript color="#F7DF1E" />, level: 78 },
-  { name: "React", icon: <FaReact color="#61DAFB" />, level: 72 },
-  { name: "Node.js", icon: <FaNodeJs color="#339933" />, level: 65 },
-  { name: "PHP", icon: <FaPhp color="#777BB4" />, level: 68 },
-  { name: "MySQL", icon: <SiMysql color="#4479A1" />, level: 72 },
-  { name: "MongoDB", icon: <SiMongodb color="#47A248" />, level: 60 },
-  { name: "Python", icon: <FaPython color="#3776AB" />, level: 65 },
-  { name: "Java", icon: <FaJava color="#ED8B00" />, level: 63 },
-  { name: "Git", icon: <FaGitAlt color="#F05032" />, level: 75 },
-  { name: "Figma", icon: <FaFigma color="#F24E1E" />, level: 60 },
+const orbit1 = [
+  {
+    name: "HTML",
+    icon: <FaHtml5 color="#E34F26" />,
+  },
+  {
+    name: "CSS",
+    icon: <FaCss3Alt color="#1572B6" />,
+  },
+  {
+    name: "JavaScript",
+    icon: <SiJavascript color="#F7DF1E" />,
+  },
 ];
+
+const orbit2 = [
+  {
+    name: "React",
+    icon: <FaReact color="#61DAFB" />,
+  },
+  {
+    name: "Node.js",
+    icon: <FaNodeJs color="#3C873A" />,
+  },
+  {
+    name: "PHP",
+    icon: <FaPhp color="#777BB4" />,
+  },
+  {
+    name: "MySQL",
+    icon: <SiMysql color="#4479A1" />,
+  },
+];
+
+const orbit3 = [
+  {
+    name: "MongoDB",
+    icon: <SiMongodb color="#47A248" />,
+  },
+  {
+    name: "Python",
+    icon: <FaPython color="#3776AB" />,
+  },
+  {
+    name: "Java",
+    icon: <FaJava color="#ED8B00" />,
+  },
+  {
+    name: "Git",
+    icon: <FaGitAlt color="#F05032" />,
+  },
+  {
+    name: "Figma",
+    icon: <FaFigma color="#F24E1E" />,
+  },
+];
+function Orbit({ skills, radius, duration, reverse = false }) {
+  return (
+    <motion.div
+      className="orbit"
+      animate={{
+        rotate: reverse ? -360 : 360,
+      }}
+      transition={{
+        repeat: Infinity,
+        duration,
+        ease: "linear",
+      }}
+      style={{
+        width: radius * 2,
+        height: radius * 2,
+      }}
+    >
+      <div className="orbit-line"></div>
+
+      {skills.map((skill, index) => {
+        const angle = (index * 360) / skills.length;
+
+        return (
+          <motion.div
+            key={skill.name}
+            className="planet"
+              style={{
+              left: "50%",
+              top: "50%",
+              transform: `
+                translate(-50%, -50%)
+                rotate(${angle}deg)
+                translateX(${radius}px)
+              `,
+              transformOrigin: "center",
+            }}
+            whileHover={{
+              scale: 1.15,
+            }}
+          >
+          <motion.div
+            className="planet-inner"
+            animate={{
+              rotate: reverse ? 360 : -360,
+            }}
+            style={{
+              transform: `rotate(-${angle}deg)`,
+            }}
+              transition={{
+                repeat: Infinity,
+                duration,
+                ease: "linear",
+              }}
+            >
+              <div className="planet-icon">
+                {skill.icon}
+              </div>
+
+              <span>{skill.name}</span>
+            </motion.div>
+          </motion.div>
+        );
+      })}
+    </motion.div>
+  );
+}
 export default function Skills() {
   return (
     <section id="skills">
       <div className="container">
-        <div className="skills-header">
+
+        {/* Header */}
+
+        <motion.div
+          className="skills-header"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <span className="section-tag">TECH STACK</span>
+
+          <h2 className="section-title">
+            Tools I <span className="accent">work with</span>
+          </h2>
+
+          <p className="section-desc">
+            Technologies I've learned and use to build modern web
+            applications.
+          </p>
+        </motion.div>
+
+        {/* Solar System */}
+
+        <div className="solar-system">
+
+          {/* Center Laptop */}
+
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            className="center-sun"
+            animate={{
+              scale: [1, 1.05, 1],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           >
-            <span className="section-tag">Tech Stack</span>
-            <h2 className="section-title">
-              Tools I <span className="accent">work with</span>
-            </h2>
-            <p className="section-desc">
-              Technologies I've learned and use to build modern web applications.
-            </p>
+            <FaLaptopCode />
           </motion.div>
+
+          {/* Orbit 1 */}
+
+          <Orbit
+            skills={orbit1}
+            radius={120}
+            duration={14}
+          />
+
+          {/* Orbit 2 */}
+
+          <Orbit
+            skills={orbit2}
+            radius={210}
+            duration={22}
+            reverse
+          />
+
+          {/* Orbit 3 */}
+
+          <Orbit
+            skills={orbit3}
+            radius={305}
+            duration={30}
+          />
+
         </div>
-        <div className="skills-grid">
-          {skills.map((skill, i) => (
-            <motion.div
-              key={skill.name}
-              className="skill-card"
-               animate={{ y: [0, -6, 0] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 2.8,
-                  ease: "easeInOut",
-                }}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              whileHover={{ y: -6 }}
-            >
-              <div className="skill-icon">{skill.icon}</div>
-              <span className="skill-name">{skill.name}</span>
-              <div className="skill-level">
-                <motion.div
-                  className="skill-level-fill"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.3 + i * 0.04 }}
-                />
-              </div>
-            </motion.div>
-          ))}
-        </div>
+
       </div>
     </section>
   );
