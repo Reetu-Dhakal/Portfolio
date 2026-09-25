@@ -6,7 +6,8 @@ const links = [
   { name: "Work", href: "#projects", id: "projects" },
   { name: "About", href: "#about", id: "about" },
   { name: "Exploring", href: "#exploring", id: "exploring" },
-  { name: "Notes", href: "#notes", id: "notes" },
+  { name: "Education", href: "#education", id: "education" },
+  { name: "Certifications", href: "#certifications", id: "certifications" },
   { name: "Contact", href: "#contact", id: "contact" },
 ];
 
@@ -17,7 +18,7 @@ export default function Navbar() {
   const menuRef = useRef(null);
 
   useEffect(() => {
-    const sections = ["home", "about", "projects", "exploring", "notes", "contact"]
+    const sections = ["home", "about", "projects", "exploring", "education", "certifications", "contact"]
       .map((id) => document.getElementById(id))
       .filter(Boolean);
 

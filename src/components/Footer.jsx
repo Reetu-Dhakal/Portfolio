@@ -7,7 +7,8 @@ const sectionLinks = [
   { label: "Work", href: "#projects" },
   { label: "About", href: "#about" },
   { label: "Exploring", href: "#exploring" },
-  { label: "Notes", href: "#notes" },
+  { label: "Education", href: "#education" },
+  { label: "Certifications", href: "#certifications" },
 ];
 
 const socialLinks = [

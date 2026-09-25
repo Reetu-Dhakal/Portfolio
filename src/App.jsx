@@ -4,9 +4,10 @@ import { MotionConfig, motion, useReducedMotion, useScroll, useSpring } from "fr
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
+import Education from "./components/Education";
 import Projects from "./components/Projects";
 import Currently from "./components/Currently";
-import Notes from "./components/Notes";
+import Certifications from "./components/Certifications";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
@@ -69,7 +70,8 @@ function App() {
         <About />
         <Projects />
         <Currently />
-        <Notes />
+        <Education />
+        <Certifications />
         <Contact />
       </main>
       <Footer />

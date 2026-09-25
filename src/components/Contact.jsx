@@ -115,8 +115,7 @@ export default function Contact() {
                 </a>
               ))}
             </div>
-            <br className="contact-link-break" aria-hidden="true" />
-                        <Reveal className="contact-copy" direction="right" distance={28}>
+            <Reveal className="contact-copy" direction="right" distance={28}>
               <p>
                 I&apos;m always happy to talk about projects, ideas, design, technology or whatever
                 you&apos;re currently figuring out.

@@ -1,7 +1,5 @@
 import Arrow from "./scrapbook/Arrow";
 import Handwritten from "./scrapbook/Handwritten";
-import PaperNote from "./scrapbook/PaperNote";
-import Polaroid from "./scrapbook/Polaroid";
 import Reveal from "./ui/Reveal";
 
 export default function About() {
@@ -9,12 +7,7 @@ export default function About() {
     <section id="about" className="about-section">
       <div className="container">
         <Reveal className="section-heading" amount={0.25}>
-          <span className="section-kicker">01 <i>—</i> A LITTLE ABOUT ME</span>
-
-          <h2>
-            I&apos;m a CSIT student becoming more curious about what happens
-            behind the screen.
-          </h2>
+          <span className="section-kicker"> A LITTLE ABOUT ME</span>
         </Reveal>
 
         <div className="about-layout">
@@ -26,7 +19,7 @@ export default function About() {
 
             <p>
               I&apos;ve always been interested in understanding how things
-              connect — from the systems behind a website to the networks
+              connect from the systems behind a website to the networks
               that keep information moving. Lately, I&apos;ve been spending
               more time learning about network security, threats, monitoring,
               and how systems can be protected.
@@ -53,27 +46,15 @@ export default function About() {
             distance={32}
             delay={0.1}
           >
-            <Polaroid
-              className="about-polaroid"
-              imageSrc="/hero_avatar.png"
-              imageAlt="Ritu Dhakal"
-              label="the person behind the tabs"
-              rotation={2}
-              imageProps={{
-                width: 896,
-                height: 1196,
-                loading: "lazy",
-              }}
+            <img
+              className="about-photo"
+              src="/hero_avatar.png"
+              alt="Ritu Dhakal"
+              loading="lazy"
+              decoding="async"
+              width={896}
+              height={1196}
             />
-
-            <PaperNote
-              className="about-note"
-              label="A few coordinates"
-              rotation={-3}
-            >
-              Networking, cybersecurity, systems, and learning how
-              everything connects.
-            </PaperNote>
 
             <Arrow
               className="about-arrow"
@@ -81,14 +62,6 @@ export default function About() {
               rotation={-8}
               size={30}
             />
-
-            <Handwritten
-              className="about-side-note"
-              rotation={3}
-              size="1.15rem"
-            >
-              still figuring it out :)
-            </Handwritten>
           </Reveal>
         </div>
       </div>

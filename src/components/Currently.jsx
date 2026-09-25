@@ -1,73 +1,50 @@
-import { motion } from "framer-motion";
-import Arrow from "./scrapbook/Arrow";
-import Handwritten from "./scrapbook/Handwritten";
-import PaperNote from "./scrapbook/PaperNote";
+import { FaCss3Alt, FaFigma, FaGitAlt, FaGithub, FaHtml5, FaNodeJs, FaPhp, FaPython, FaReact } from "react-icons/fa";
+import { SiJavascript, SiMongodb, SiMysql } from "react-icons/si";
 import Reveal from "./ui/Reveal";
-import Scribble from "./scrapbook/Scribble";
 
 const skills = [
-  "React",
-  "JavaScript",
-  "HTML5",
-  "CSS3",
-  "Node.js",
-  "PHP",
-  "Java",
-  "MySQL",
-  "MongoDB",
-  "Git",
-  "GitHub",
-  "Figma",
-];
-
-const process = [
-  { title: "Understand", text: "Start with the problem, not the tool." },
-  { title: "Build", text: "Make the smallest useful version first." },
-  { title: "Refine", text: "Remove what does not need to be there." },
+  { name: "React", icon: FaReact, color: "#61DAFB" },
+  { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
+  { name: "HTML5", icon: FaHtml5, color: "#E34F26" },
+  { name: "CSS3", icon: FaCss3Alt, color: "#1572B6" },
+  { name: "Node.js", icon: FaNodeJs, color: "#3C873A" },
+  { name: "PHP", icon: FaPhp, color: "#777BB4" },
+  { name: "Python", icon: FaPython, color: "#3776AB" },
+  { name: "MySQL", icon: SiMysql, color: "#4479A1" },
+  { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+  { name: "Git", icon: FaGitAlt, color: "#F05032" },
+  { name: "GitHub", icon: FaGithub, color: "#FFFFFF" },
+  { name: "Figma", icon: FaFigma, color: "#F24E1E" },
 ];
 
 export default function Currently() {
   return (
     <section id="exploring" className="exploring-section">
       <div className="container">
-        <Reveal className="section-heading section-heading-light" amount={0.25}>
-          <span className="section-kicker">03 <i>—</i> CURRENTLY EXPLORING</span>
-          <h2>Tools change. The fundamentals stay.</h2>
-        </Reveal>
-
         <div className="exploring-layout">
-          <Reveal className="exploring-cloud" amount={0.2}>
-            <span className="cloud-label cloud-label-top">a working collection</span>
-            <ul aria-label="Technical skills">
-              {skills.map((skill, index) => (
-                <li className={`exploring-word exploring-word-${index + 1}`} key={skill}>
-                  {skill}
-                </li>
-              ))}
-            </ul>
-            <Scribble className="cloud-scribble" rotation={-4} width="8rem" />
-            <Arrow className="cloud-arrow" direction="right" rotation={-9} size={34} />
-            <Handwritten className="cloud-note" rotation={-3} size="1.1rem">not a badge wall ✳</Handwritten>
+          <Reveal className="section-heading section-heading-light exploring-copy" amount={0.25}>
+            <span className="section-kicker">CURRENTLY EXPLORING</span>
+            <h2>Tools change. The fundamentals stay...</h2>
           </Reveal>
 
-          <Reveal className="exploring-notes" direction="left" distance={28} delay={0.1}>
-            {process.map((item, index) => (
-              <PaperNote className={`process-note process-note-${index + 1}`} label={item.title} rotation={index % 2 ? 2 : -2} key={item.title}>
-                {item.text}
-              </PaperNote>
-            ))}
+          <Reveal className="exploring-cloud" amount={0.2}>
+            <div className="exploring-notepad" aria-hidden="true">
+            </div>
+            <span className="cloud-label cloud-label-top"></span>
+            <ul className="exploring-words" aria-label="Technical skills">
+              {skills.map((skill, index) => {
+                const Icon = skill.icon;
+
+                return (
+                  <li className={`exploring-word exploring-word-${index + 1}`} key={skill.name}>
+                    <Icon className="exploring-word-icon" color={skill.color} aria-hidden="true" />
+                    <span>{skill.name}</span>
+                  </li>
+                );
+              })}
+            </ul>
           </Reveal>
         </div>
-
-        <motion.p
-          className="exploring-footnote"
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.55 }}
-        >
-          I care more about understanding the basics than collecting names.
-        </motion.p>
       </div>
     </section>
   );
