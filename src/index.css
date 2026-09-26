@@ -738,7 +738,7 @@ dl {
 
 .about-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.03fr) minmax(300px, 0.78fr);
+  grid-template-columns: minmax(300px, 0.95fr) minmax(0, 1.05fr);
   gap: clamp(55px, 10vw, 150px);
   align-items: center;
 }
@@ -776,7 +776,8 @@ dl {
 
 .about-collage {
   position: relative;
-  min-height: 500px;
+  top: clamp(-40px, -2.5vw, -16px);
+  min-height: 0;
   display: grid;
   place-items: center;
 }
@@ -5195,17 +5196,17 @@ dl {
 }
 
 .about-section {
-  padding-top: clamp(36px, 5vw, 64px);
-  padding-bottom: clamp(36px, 5vw, 64px);
+  padding-top: clamp(24px, 3vw, 44px);
+  padding-bottom: clamp(24px, 3vw, 44px);
 }
 
 .about-section .section-heading {
-  margin-bottom: clamp(26px, 4vw, 44px);
+  margin-bottom: clamp(16px, 2.5vw, 30px);
 }
 
 .about-layout {
-  gap: clamp(24px, 4vw, 56px);
-  align-items: stretch;
+  gap: clamp(20px, 3vw, 44px);
+  align-items: center;
 }
 
 .about-copy {
@@ -5213,20 +5214,19 @@ dl {
 }
 
 .about-copy p + p {
-  margin-top: 14px;
+  margin-top: 10px;
 }
 
 .about-copy .about-lead {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .about-handnote {
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
 .about-collage {
   min-height: 0;
-  align-self: stretch;
 }
 
 .about-polaroid {
@@ -5244,7 +5244,7 @@ dl {
 
 .about-photo {
   display: block;
-  width: min(78%, 20rem);
+  width: min(100%, 34rem);
   max-width: 100%;
   max-height: 100%;
   height: auto;
@@ -5253,7 +5253,7 @@ dl {
   background: transparent;
   object-fit: contain;
   box-shadow: none;
-  transform: rotate(2deg);
+  filter: contrast(1.06) saturate(1.08) drop-shadow(0 22px 34px rgba(37, 37, 31, 0.18));
 }
 
 .about-copy > p:not(.about-lead) {
@@ -5379,7 +5379,7 @@ dl {
   }
 
   .about-photo {
-    width: min(82%, 19rem);
+    width: min(100%, 32rem);
   }
 
   .profile-facts {
@@ -5481,7 +5481,7 @@ dl {
   }
 
   .about-photo {
-    width: min(86%, 18rem);
+    width: min(100%, 28rem);
   }
 
   .profile-facts {

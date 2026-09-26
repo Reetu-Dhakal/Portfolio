@@ -1,4 +1,3 @@
-import Arrow from "./scrapbook/Arrow";
 import Handwritten from "./scrapbook/Handwritten";
 import Reveal from "./ui/Reveal";
 
@@ -11,7 +10,23 @@ export default function About() {
         </Reveal>
 
         <div className="about-layout">
-          <Reveal className="about-copy" direction="right" distance={28}>
+          <Reveal
+            className="about-collage"
+            direction="left"
+            distance={32}
+          >
+            <img
+              className="about-photo"
+              src="/hero_avatar_cut.png"
+              alt="Ritu Dhakal"
+              loading="lazy"
+              decoding="async"
+              width={710}
+              height={977}
+            />
+          </Reveal>
+
+          <Reveal className="about-copy" direction="right" distance={28} delay={0.1}>
             <p className="about-lead">
               I&apos;m Ritu, a BSc CSIT student exploring networking and
               cybersecurity through hands-on learning.
@@ -38,30 +53,6 @@ export default function About() {
             >
               currently exploring the world behind the screen ↗
             </Handwritten>
-          </Reveal>
-
-          <Reveal
-            className="about-collage"
-            direction="left"
-            distance={32}
-            delay={0.1}
-          >
-            <img
-              className="about-photo"
-              src="/hero_avatar.png"
-              alt="Ritu Dhakal"
-              loading="lazy"
-              decoding="async"
-              width={896}
-              height={1196}
-            />
-
-            <Arrow
-              className="about-arrow"
-              direction="downRight"
-              rotation={-8}
-              size={30}
-            />
           </Reveal>
         </div>
       </div>
