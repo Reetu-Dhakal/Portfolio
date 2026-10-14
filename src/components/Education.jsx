@@ -1,126 +1,86 @@
+import { motion } from "framer-motion";
 import { GraduationCap, School } from "lucide-react";
-import Handwritten from "./scrapbook/Handwritten";
-import Tape from "./scrapbook/Tape";
-import Reveal from "./ui/Reveal";
+import { fadeUpVariant } from "../utils/motion";
+import "./Education.css";
 
-const education = [
+const timeline = [
   {
-    period: "2080 — Present",
-    title: "Bachelor of Science in Computer Science and Information Technology",
-    shortTitle: "BSc. CSIT",
+    period: "2023 – Present",
+    kicker: "Currently Studying",
+    title: "BSc. CSIT",
+    subtitle: "Bachelor of Science in Computer Science and Information Technology",
     institution: "New Summit College (TU Affiliated)",
-    icon: GraduationCap,
     current: true,
   },
   {
-    period: "2077 — 2080",
-    title: "Higher Secondary Education",
-    shortTitle: "Science (Bio-Math)",
+    // TODO: double-check these years
+    period: "2018 – 2020",
+    kicker: "Education",
+    title: "Science (Bio-Math)",
+    subtitle: "Higher Secondary Education",
     institution: "Reliance International College",
-    icon: School,
   },
   {
-    period: "2077",
-    title: "Secondary Education Examination",
-    shortTitle: "SEE",
+    period: "2017",
+    kicker: "Education",
+    title: "SEE",
+    subtitle: "Secondary Education Examination",
     institution: "International Joseph Public School",
-    icon: School,
   },
 ];
 
 export default function Education() {
   return (
-    <section id="education" className="education-section">
+    <section id="education" className="section education-section">
       <div className="container">
-        <div className="education-layout">
-          <Reveal
-            className="section-heading education-heading"
-            amount={0.25}
-          >
-            <span className="section-kicker">
-            ACADEMIC LIFE
-            </span>
+        <motion.div
+          className="section-header"
+          variants={fadeUpVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          <span className="section-kicker">Academic Background</span>
+          <h2 className="section-title">Education</h2>
+          <p className="section-desc">
+            Formal university foundation supporting practical networking and cybersecurity exploration.
+          </p>
+        </motion.div>
 
-            <h2>A little bit of where I&apos;ve been learning.</h2>
+        <div className="edu-timeline">
+          {timeline.map((item, i) => (
+            <motion.div
+              key={item.title}
+              className="edu-row"
+              variants={fadeUpVariant}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              custom={i}
+            >
+              <span className="edu-period">{item.period}</span>
 
-            <p className="education-summary">
-              My academic path started with science, moved toward computer
-              science, and is still unfolding through study, building, and
-              experimentation.
-            </p>
-          </Reveal>
-
-          <div className="education-timeline">
-            {education.map((item, index) => {
-            const Icon = item.icon;
-
-            return (
-              <Reveal
-                key={item.number}
-                className={`education-entry ${
-                  item.current ? "is-current" : ""
-                }`}
-                amount={0.15}
-                delay={index * 0.08}
+              <motion.article
+                className={`edu-card ${item.current ? "edu-card--current" : ""}`}
+                whileHover={{ x: -2, y: -2 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
-                <div className="education-year">
-                  <span>{item.period}</span>
+                <div
+                  className={`edu-icon-badge ${item.current ? "edu-icon-badge--current" : ""}`}
+                  aria-hidden="true"
+                >
+                  {item.current ? <GraduationCap size={22} /> : <School size={22} />}
                 </div>
 
-                <div className="education-pin" aria-hidden="true">
-                  <span />
+                <div className="edu-card-content">
+                  <span className="edu-kicker">{item.kicker}</span>
+                  <h3 className="edu-title">{item.title}</h3>
+                  <p className="edu-subtitle">{item.subtitle}</p>
+                  <p className="edu-institution">{item.institution}</p>
                 </div>
-
-                <div className="education-paper">
-                  {item.current && (
-                    <Tape
-                      className="education-tape"
-                      rotation={2}
-                    />
-                  )}
-
-                  <div className="education-number">
-                    {item.number}
-                  </div>
-
-                  <div className="education-entry-icon">
-                    <Icon size={21} aria-hidden="true" />
-                  </div>
-
-                  <div className="education-entry-content">
-                    <span className="education-entry-label">
-                      {item.current ? "CURRENTLY STUDYING" : "EDUCATION"}
-                    </span>
-
-                    <h3>{item.shortTitle}</h3>
-
-                    <p className="education-degree">
-                      {item.title}
-                    </p>
-
-                    <p className="education-institution">
-                      {item.institution}
-                    </p>
-
-                    <span className="education-detail">
-                      {item.detail}
-                    </span>
-                  </div>
-
-                  {item.current && (
-                    <Handwritten
-                      className="education-current-note"
-                      rotation={3}
-                      size="1rem"
-                    >
-                  
-                    </Handwritten>
-                  )}
-                </div>
-              </Reveal>
-            );
-            })}
-          </div>
+              </motion.article>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

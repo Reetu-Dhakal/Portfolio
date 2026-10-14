@@ -1,0 +1,231 @@
+/* Projects Section */
+.projects-section {
+  background-color: var(--bg-alt);
+}
+
+/* Carousel Wrapper */
+.projects-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0 24px;
+}
+
+.projects-carousel {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 24px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+  flex: 1;
+  padding: 8px 0 16px;
+}
+
+.projects-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.projects-carousel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.projects-carousel::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 4px;
+}
+
+.projects-carousel::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-brown-subtle);
+}
+
+/* Project Slide - Fixed width for consistent scrolling */
+.project-slide {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+}
+
+/* Carousel Navigation Buttons */
+.carousel-nav {
+  position: relative;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(48, 37, 34, 0.06);
+}
+
+.carousel-nav:hover {
+  background-color: var(--color-maroon);
+  border-color: var(--color-maroon);
+  color: var(--color-cream);
+  transform: scale(1.05);
+}
+
+.carousel-nav:active {
+  transform: scale(0.95);
+}
+
+.carousel-nav.prev {
+  margin-left: -8px;
+}
+
+.carousel-nav.next {
+  margin-right: -8px;
+}
+
+/* Scroll Hint */
+.scroll-hint {
+  text-align: center;
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-tertiary);
+  animation: scroll-hint-pulse 2s ease-in-out infinite;
+}
+
+@keyframes scroll-hint-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Project Card */
+.project-card {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(48, 37, 34, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.project-card:hover {
+  border-color: var(--color-maroon);
+  box-shadow: 0 12px 40px rgba(112, 35, 47, 0.1);
+  transform: translateY(-4px);
+}
+
+/* Project Image */
+.project-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  background-color: var(--color-beige);
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.05);
+}
+
+/* Project Content */
+.project-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 18px 16px;
+  gap: 12px;
+}
+
+.project-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.project-description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+/* Actions */
+.project-actions {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.project-btn {
+  font-size: 14px;
+  width: 100%;
+  justify-content: center;
+}
+
+.lab-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  width: 100%;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .projects-carousel-wrapper {
+    gap: 8px;
+  }
+
+  .carousel-nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .carousel-nav.prev {
+    margin-left: -4px;
+  }
+
+  .carousel-nav.next {
+    margin-right: -4px;
+  }
+
+  .project-slide {
+    flex: 0 0 240px;
+  }
+
+  .project-content {
+    padding: 16px 14px;
+  }
+
+  .project-title {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-slide {
+    flex: 0 0 220px;
+  }
+
+  .carousel-nav {
+    display: none;
+  }
+}

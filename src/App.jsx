@@ -1,81 +1,39 @@
-import { useEffect } from "react";
-import Lenis from "lenis";
-import { MotionConfig, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import ScrollProgress from "./components/ScrollProgress";
+import CustomCursor from "./components/CustomCursor";
+import CursorGlow from "./components/CursorGlow";
+import AnimatedBackground from "./components/AnimatedBackground";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
-import Education from "./components/Education";
+import Skills from "./components/Skills";
 import Projects from "./components/Projects";
-import Currently from "./components/Currently";
-import Certifications from "./components/Certifications";
+import Education from "./components/Education";
+import Certificates from "./components/Certificates";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
-function ScrollProgress() {
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 180,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
-  return <motion.div aria-hidden="true" className="scroll-progress" style={reduceMotion ? { scaleX: 0 } : { scaleX }} />;
-}
-
 function App() {
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return undefined;
-    }
-
-    const lenis = new Lenis({
-      duration: 1.05,
-      smoothWheel: true,
-      wheelMultiplier: 0.9,
-    });
-    let frameId;
-    const handleMenuState = (event) => {
-      if (event.detail?.open) {
-        lenis.stop();
-      } else {
-        lenis.start();
-      }
-    };
-
-    const raf = (time) => {
-      lenis.raf(time);
-      frameId = requestAnimationFrame(raf);
-    };
-
-    window.addEventListener("portfolio:menu", handleMenuState);
-    frameId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(frameId);
-      window.removeEventListener("portfolio:menu", handleMenuState);
-      lenis.destroy();
-    };
-  }, []);
-
   return (
-    <MotionConfig reducedMotion="user">
+    <>
+      <ScrollProgress />
+      <CustomCursor />
+      <CursorGlow />
+      <AnimatedBackground />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <ScrollProgress />
       <Navbar />
       <main id="main-content" tabIndex={-1}>
         <Hero />
         <About />
+        <Skills />
         <Projects />
-        <Currently />
         <Education />
-        <Certifications />
+        <Certificates />
         <Contact />
       </main>
       <Footer />
-    </MotionConfig>
+    </>
   );
 }
 

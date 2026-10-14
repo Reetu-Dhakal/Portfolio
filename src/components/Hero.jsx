@@ -1,176 +1,99 @@
-import { useEffect, useRef } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import Arrow from "./scrapbook/Arrow";
-import Handwritten from "./scrapbook/Handwritten";
-import Tape from "./scrapbook/Tape";
+import "./Hero.css";
 
-const socialLinks = [
-  { name: "GitHub", href: "https://github.com/Reetu-Dhakal", icon: FaGithub },
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/ritu-d-563669300/", icon: FaLinkedin },
-  { name: "Email", href: "mailto:dhakalreetu05@gmail.com", icon: null },
+const ROLES = [
+  "Networking Enthusiast",
+  "Cybersecurity Enthusiast",
+  "Cloud Learner",
+  "Full-Stack Developer",
 ];
 
-export default function Hero() {
-  const heroRef = useRef(null);
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
+function useTyping(words, { typeSpeed = 70, deleteSpeed = 40, hold = 1400 } = {}) {
+  const [text, setText] = useState(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return words[0];
+    }
+    return "";
   });
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const portraitY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const portraitRotate = useTransform(scrollYProgress, [0, 1], [-1.5, 1.5]);
-
-  return (
-    <section id="home" className="hero-section" ref={heroRef}>
-      <div className="hero-paper-lines" aria-hidden="true" />
-      <div className="container hero-shell">
-        <motion.div
-          className="hero-copy"
-          style={{ y: reduceMotion ? 0 : titleY }}
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.1 } },
-          }}
-        >
-          <motion.span className="hero-hello" variants={fadeUp}>Hello, I&apos;m</motion.span>
-          <motion.h1 className="hero-title" variants={fadeUp}>
-            <span>Ritu</span>
-            <span>Dhakal</span>
-          </motion.h1>
-          <motion.div className="hero-actions" variants={fadeUp}>
-            <a className="button button-primary" href="#projects">
-              Explore my work
-              <ArrowUpRight size={17} aria-hidden="true" />
-            </a>
-            <a className="text-link" href="#about">
-              About me <ArrowUpRight size={15} aria-hidden="true" />
-            </a>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          className="hero-portrait-column"
-          style={{
-            y: reduceMotion ? 0 : portraitY,
-            rotate: reduceMotion ? 0 : portraitRotate,
-          }}
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <CursorPortrait />
-          <Handwritten className="hero-portrait-note" rotation={-3} size="1.4rem"></Handwritten>
-          <Arrow className="hero-portrait-arrow" direction="downLeft" rotation={-7} size={32} />
-        </motion.div>
-        <nav className="hero-socials" aria-label="Social links">
-          {socialLinks.map(({ name, href, icon: Icon }) => (
-            <a href={href} aria-label={name} key={name}>
-              {Icon ? <Icon size={15} aria-hidden="true" /> : <span aria-hidden="true">@</span>}
-              {name}
-            </a>
-          ))}
-        </nav>
-      </div>
-
-      <div className="hero-marquee" aria-hidden="true">
-        <div>
-          <span>learn</span><i>✦</i><span>build</span><i>✦</i><span>connect</span><i>✦</i><span>repeat</span><i>✦</i><span>learn</span><i>✦</i><span>build</span><i>✦</i><span>connect</span><i>✦</i><span>repeat</span><i>✦</i>
-          <span>learn</span><i>✦</i><span>build</span><i>✦</i><span>connect</span><i>✦</i><span>repeat</span><i>✦</i><span>learn</span><i>✦</i><span>build</span><i>✦</i><span>connect</span><i>✦</i><span>repeat</span><i>✦</i>
-          <span>learn</span><i>✦</i><span>build</span><i>✦</i><span>connect</span><i>✦</i><span>repeat</span><i>✦</i><span>learn</span><i>✦</i><span>build</span><i>✦</i><span>connect</span><i>✦</i><span>repeat</span><i>✦</i>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.72, ease: [0.22, 1, 0.36, 1] } },
-};
-
-function CursorPortrait() {
-  const frameRef = useRef(null);
-  const imageRef = useRef(null);
+  const [index, setIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const canTrack =
-      window.matchMedia("(pointer: fine)").matches &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (!canTrack || !frameRef.current || !imageRef.current) {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
       return undefined;
     }
 
-    const target = { x: 0, y: 0 };
-    const current = { x: 0, y: 0 };
-    let frameId = 0;
+    const word = words[index];
+    let delay = deleting ? deleteSpeed : typeSpeed;
 
-    const render = () => {
-      current.x += (target.x - current.x) * 0.1;
-      current.y += (target.y - current.y) * 0.1;
-      imageRef.current.style.transform = `perspective(1100px) rotateX(${current.y * -3}deg) rotateY(${current.x * 4}deg) translate3d(${current.x * 6}px, ${current.y * 4}px, 0) scale(1.02)`;
-      frameRef.current.style.setProperty("--pointer-x", `${50 + current.x * 34}%`);
-      frameRef.current.style.setProperty("--pointer-y", `${50 + current.y * 34}%`);
-      const moving = Math.abs(target.x - current.x) > 0.001 || Math.abs(target.y - current.y) > 0.001;
-      frameId = moving ? requestAnimationFrame(render) : 0;
-    };
+    if (!deleting && text === word) delay = hold;
 
-    const requestRender = () => {
-      if (!frameId) {
-        frameId = requestAnimationFrame(render);
+    const timer = setTimeout(() => {
+      if (!deleting && text === word) {
+        setDeleting(true);
+      } else if (deleting && text === "") {
+        setDeleting(false);
+        setIndex((i) => (i + 1) % words.length);
+      } else {
+        setText(
+          deleting ? word.slice(0, text.length - 1) : word.slice(0, text.length + 1)
+        );
       }
-    };
+    }, delay);
 
-    const onPointerMove = (event) => {
-      const bounds = frameRef.current.getBoundingClientRect();
-      target.x = Math.max(-1, Math.min(1, (event.clientX - bounds.left - bounds.width / 2) / (bounds.width / 2)));
-      target.y = Math.max(-1, Math.min(1, (event.clientY - bounds.top - bounds.height / 2) / (bounds.height / 2)));
-      requestRender();
-    };
+    return () => clearTimeout(timer);
+  }, [text, deleting, index, words, typeSpeed, deleteSpeed, hold]);
 
-    const reset = () => {
-      target.x = 0;
-      target.y = 0;
-      requestRender();
-    };
+  return text;
+}
 
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    document.addEventListener("mouseleave", reset);
-    window.addEventListener("blur", reset);
-
-    return () => {
-      cancelAnimationFrame(frameId);
-      window.removeEventListener("pointermove", onPointerMove);
-      document.removeEventListener("mouseleave", reset);
-      window.removeEventListener("blur", reset);
-    };
-  }, []);
+export default function Hero() {
+  const typed = useTyping(ROLES);
 
   return (
-    <div className="portrait-stage">
-      <Tape className="portrait-tape portrait-tape-top" rotation={-5} width="6.5rem" height="1.45rem" />
-      <div className="portrait-frame" ref={frameRef}>
-        <img
-          ref={imageRef}
-          src="/hero_avatar.png"
-          alt="Portrait of Ritu Dhakal"
-          width="896"
-          height="1196"
-          fetchPriority="high"
-        />
+    <section id="home" className="hero-section">
+      <div className="container hero-container">
+        {/* Left: greeting, typing, student line, buttons */}
+        <div className="hero-content">
+          <span className="hero-hi">Hi!</span>
+
+          <p className="hero-typing" aria-label="Networking and cybersecurity enthusiast">
+            <span className="hero-typing-word">{typed}</span>
+            <span className="typing-cursor" aria-hidden="true">|</span>
+          </p>
+
+          <p className="hero-student">BSc CSIT Student</p>
+
+          <div className="hero-cta-group">
+            <a className="hero-btn hero-btn-primary" href="#projects">
+              Explore My Work
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+            <a className="hero-btn hero-btn-secondary" href="#contact">
+              Get in touch
+            </a>
+          </div>
+        </div>
+
+        {/* Centre: portrait */}
+        <div className="hero-photo">
+          <img
+            src="/hero_avatar.png"
+            alt="Portrait of Ritu Dhakal"
+            width="896"
+            height="1196"
+            fetchPriority="high"
+          />
+        </div>
+
+        {/* Right: name */}
+        <h1 className="hero-name">
+          <span className="hero-name-small">I'm</span>
+          <span className="hero-name-big">Ritu Dhakal</span>
+        </h1>
       </div>
-      <Tape className="portrait-tape portrait-tape-bottom" rotation={4} width="5.5rem" height="1.3rem" />
-      <Handwritten className="portrait-caption" rotation={2} size="1.05rem"></Handwritten>
-    </div>
+    </section>
   );
 }

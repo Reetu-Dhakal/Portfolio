@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340">
+  <rect width="600" height="340" fill="#EFE5D8"/>
+  <rect x="40" y="40" width="260" height="160" rx="8" fill="#1A1A2E" stroke="#9FEF00" stroke-width="2"/>
+  <rect x="60" y="60" width="220" height="32" rx="4" fill="#9FEF00"/>
+  <rect x="60" y="110" width="180" height="16" rx="3" fill="#FFFFFF" opacity="0.9"/>
+  <rect x="60" y="140" width="200" height="12" rx="2" fill="#FFFFFF" opacity="0.6"/>
+  <rect x="60" y="165" width="150" height="12" rx="2" fill="#FFFFFF" opacity="0.4"/>
+  <rect x="60" y="190" width="100" height="12" rx="2" fill="#9FEF00" opacity="0.7"/>
+  <rect x="330" y="40" width="230" height="160" rx="8" fill="#FFFFFF" stroke="#E0D3C1" stroke-width="2"/>
+  <rect x="350" y="60" width="190" height="16" rx="3" fill="#212C42"/>
+  <circle cx="380" cy="120" r="35" fill="#FF6B35"/>
+  <circle cx="380" cy="120" r="20" fill="#212C42"/>
+  <rect x="40" y="230" width="520" height="80" rx="8" fill="#FFFFFF" stroke="#E0D3C1" stroke-width="2"/>
+  <rect x="60" y="250" width="480" height="16" rx="3" fill="#212C42" opacity="0.1"/>
+  <rect x="60" y="280" width="300" height="10" rx="2" fill="#9FEF00"/>
+  <rect x="60" y="300" width="200" height="10" rx="2" fill="#FF6B35"/>
+  <text x="300" y="330" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#1A1A2E">TryHackMe Cybersecurity Labs</text>
+</svg>

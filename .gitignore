@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.next
 
 # Local scratch files
 scrapbook.html

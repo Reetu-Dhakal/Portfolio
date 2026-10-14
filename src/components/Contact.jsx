@@ -1,211 +1,188 @@
 import { useState } from "react";
-import { ArrowUpRight, Mail } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import Handwritten from "./scrapbook/Handwritten";
-import Reveal from "./ui/Reveal";
+import { SiGmail } from "react-icons/si";
+import { init, send } from "@emailjs/browser";
+import { fadeUpVariant } from "../utils/motion";
+import "./Contact.css";
 
-const contactEmail = "dhakalreetu05@gmail.com";
-const contactEndpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT;
+const EMAIL = "dhakalreetu05@gmail.com";
 
-const socialLinks = [
-  { name: "GitHub", href: "https://github.com/Reetu-Dhakal", icon: FaGithub },
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/ritu-d-563669300/", icon: FaLinkedin },
-];
+// EmailJS config - REPLACE THESE WITH YOUR ACTUAL VALUES
+const EMAILJS_PUBLIC_KEY = "uIGl13-5BvUjNT-p1";      // From EmailJS Account > API Keys
+const EMAILJS_SERVICE_ID = "service_fe339wr";      // From EmailJS Email Services (Gmail)
+const EMAILJS_TEMPLATE_ID = "template_i5ous3e";    // From EmailJS Email Templates
 
-const initialForm = {
-  name: "",
-  email: "",
-  message: "",
-  company: "",
-};
+init(EMAILJS_PUBLIC_KEY);
 
 export default function Contact() {
-  const [form, setForm] = useState(initialForm);
-  const [status, setStatus] = useState({ type: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [formState, setFormState] = useState({ error: "", success: "", sending: false });
 
-  const updateField = (event) => {
-    const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
-    if (status.type) {
-      setStatus({ type: "", message: "" });
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFormState({ error: "", success: "", sending: true });
+
+    if (!form.name.trim()) {
+      setFormState({ error: "Please enter your name.", success: "", sending: false });
+      return;
     }
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const name = form.name.trim();
-    const email = form.email.trim();
-    const message = form.message.trim();
-
-    if (form.company) {
+    if (!validateEmail(form.email.trim())) {
+      setFormState({ error: "Please enter a valid email address.", success: "", sending: false });
+      return;
+    }
+    if (!form.message.trim()) {
+      setFormState({ error: "Please write your message.", success: "", sending: false });
       return;
     }
 
-    if (!name || !email || !message) {
-      setStatus({ type: "error", message: "Please fill in your name, email, and message." });
-      return;
+    try {
+      await send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        from_name: form.name,
+        from_email: form.email,
+        message: form.message,
+        to_email: EMAIL,
+      });
+
+      setFormState({
+        error: "",
+        success: "Message sent successfully! I'll get back to you soon.",
+        sending: false,
+      });
+      setForm({ name: "", email: "", message: "" });
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setFormState({
+        error: "Failed to send message. Please try again or email me directly.",
+        success: "",
+        sending: false,
+      });
     }
-
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      setStatus({ type: "error", message: "Please enter a valid email address." });
-      return;
-    }
-
-    setStatus({ type: "sending", message: "Sending your message..." });
-
-    if (contactEndpoint) {
-      try {
-        const response = await fetch(contactEndpoint, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email, message }),
-        });
-
-        if (!response.ok) {
-          throw new Error("The contact endpoint returned an error.");
-        }
-
-        setForm(initialForm);
-        setStatus({ type: "success", message: "Thanks — your message has been sent." });
-      } catch {
-        setStatus({
-          type: "error",
-          message: `I couldn't send that automatically. Email me directly at ${contactEmail}.`,
-        });
-      }
-      return;
-    }
-
-    const subject = encodeURIComponent(`Portfolio message from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-    window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
-    setStatus({ type: "success", message: "Your email app should open with the message ready to send." });
   };
 
   return (
     <section id="contact" className="contact-section">
-      <div className="container contact-shell">
-        <div className="contact-layout">
-          <div className="contact-intro">
-            <Reveal className="section-heading section-heading-light contact-heading" amount={0.2}>
-              <span className="section-kicker">SAY HELLO</span>
-              <h2>Got something<br /><em>to say?</em></h2>
-            </Reveal>
+      <div className="container contact-grid">
+        {/* Left: heading, links, intro, CTA */}
+        <motion.div
+          className="contact-left"
+          variants={fadeUpVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          <span className="contact-kicker">Say hello</span>
+          <h2 className="contact-title">
+            Got something
+            <span className="contact-title-accent">to say?</span>
+          </h2>
 
-            <div className="contact-link-grid">
-              <a className="contact-link-card contact-email-card" href={`mailto:${contactEmail}`}>
-                <span className="contact-link-icon"><Mail size={17} aria-hidden="true" /></span>
-                <span className="contact-link-copy">
-                  <small>Gmail / Email</small>
-                  <strong>{contactEmail}</strong>
-                </span>
-                <ArrowUpRight size={16} aria-hidden="true" />
-              </a>
-              {socialLinks.map(({ name, href, icon: Icon }) => (
-                <a className="contact-link-card" href={href} target="_blank" rel="noopener noreferrer" key={name}>
-                  <span className="contact-link-icon"><Icon size={17} aria-hidden="true" /></span>
-                  <span className="contact-link-copy">
-                    <small>Profile</small>
-                    <strong>{name}</strong>
-                  </span>
-                  <ArrowUpRight size={16} aria-hidden="true" />
-                </a>
-              ))}
-            </div>
-            <Reveal className="contact-copy" direction="right" distance={28}>
-              <p>
-                I&apos;m always happy to talk about projects, ideas, design, technology or whatever
-                you&apos;re currently figuring out.
-              </p>
-              <a className="button button-primary" href={`mailto:${contactEmail}`}>
-                Let&apos;s talk
-                <ArrowUpRight size={17} aria-hidden="true" />
-              </a>
-              <Handwritten className="contact-handnote" rotation={-3} size="1.35rem"></Handwritten>
-            </Reveal>
+          <div className="contact-icons">
+            <a
+              className="contact-icon-link contact-icon-gmail"
+              href={`mailto:${EMAIL}`}
+              aria-label="Send me an email"
+              title="Email"
+            >
+              <SiGmail size={28} aria-hidden="true" />
+            </a>
+            <a
+              className="contact-icon-link contact-icon-github"
+              href="https://github.com/Reetu-Dhakal"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub profile"
+              title="GitHub"
+            >
+              <FaGithub size={30} aria-hidden="true" />
+            </a>
+            <a
+              className="contact-icon-link contact-icon-linkedin"
+              href="https://www.linkedin.com/in/ritu-d-563669300/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn profile"
+              title="LinkedIn"
+            >
+              <FaLinkedin size={30} aria-hidden="true" />
+            </a>
           </div>
 
+          <p className="contact-intro">
+            I'm always happy to talk about projects, ideas, networking, security,
+            or whatever you're currently figuring out.
+          </p>
 
-          <Reveal className="contact-form-panel" direction="left" distance={30} delay={0.1}>
-            <div className="contact-form-heading">
-              <span className="section-kicker">OR SEND A MESSAGE</span>
-            </div>
+          <a className="contact-btn" href={`mailto:${EMAIL}`}>
+            Let's talk <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
+        </motion.div>
 
-            <form
-              className="contact-form"
-              action={`mailto:${contactEmail}`}
-              method="post"
-              encType="text/plain"
-              onSubmit={handleSubmit}
-              noValidate
-            >
-              <div className="form-row">
-                <label>
-                  Name
-                  <input
-                    name="name"
-                    type="text"
-                    value={form.name}
-                    onChange={updateField}
-                    placeholder="Your name"
-                    autoComplete="name"
-                    maxLength={80}
-                    required
-                  />
-                </label>
-                <label>
-                  Email
-                  <input
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={updateField}
-                    placeholder="you@example.com"
-                    autoComplete="email"
-                    maxLength={120}
-                    required
-                  />
-                </label>
-              </div>
-              <label>
-                Message
-                <textarea
-                  name="message"
-                  value={form.message}
-                  onChange={updateField}
-                  placeholder="Write your message here..."
-                  rows={5}
-                  maxLength={2000}
-                  required
-                />
-              </label>
+        {/* Right: form */}
+        <motion.form
+          className="contact-form"
+          onSubmit={handleSubmit}
+          noValidate
+          variants={fadeUpVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          <span className="contact-form-kicker">Or send a message</span>
+
+          <div className="contact-form-row">
+            <div className="contact-field">
+              <label htmlFor="contact-name">Name</label>
               <input
-                className="form-honeypot"
-                name="company"
+                id="contact-name"
                 type="text"
-                value={form.company}
-                onChange={updateField}
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
+                placeholder="Your name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
               />
-              <div className="form-actions">
-                <button className="button button-primary" type="submit" disabled={status.type === "sending"}>
-                  {status.type === "sending" ? "Sending..." : "Send message"}
-                  <ArrowUpRight size={17} aria-hidden="true" />
-                </button>
-              </div>
-              {status.message ? (
-                <p className={`form-status form-status-${status.type}`} role="status" aria-live="polite">
-                  {status.message}
-                </p>
-              ) : null}
-            </form>
-          </Reveal>
-        </div>
+            </div>
+            <div className="contact-field">
+              <label htmlFor="contact-email">Email</label>
+              <input
+                id="contact-email"
+                type="email"
+                placeholder="you@example.com"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+              />
+            </div>
+          </div>
+
+          <div className="contact-field">
+            <label htmlFor="contact-message">Message</label>
+            <textarea
+              id="contact-message"
+              rows={6}
+              placeholder="Write your message here..."
+              value={form.message}
+              onChange={(e) => setForm({ ...form, message: e.target.value })}
+            />
+          </div>
+
+          {formState.error && (
+            <p className="contact-feedback contact-feedback-error" role="alert">
+              {formState.error}
+            </p>
+          )}
+          {formState.success && (
+            <p className="contact-feedback contact-feedback-ok" role="status">
+              {formState.success}
+            </p>
+          )}
+
+          <button type="submit" className="contact-btn" disabled={formState.sending}>
+            {formState.sending ? "Sending..." : "Send message"}
+            <ArrowUpRight size={15} aria-hidden="true" />
+          </button>
+        </motion.form>
       </div>
     </section>
   );

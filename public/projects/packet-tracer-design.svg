@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340">
+  <rect width="600" height="340" fill="#EFE5D8"/>
+  <rect x="30" y="30" width="540" height="180" rx="8" fill="#183153" stroke="#00B8D4" stroke-width="2"/>
+  <rect x="60" y="50" width="200" height="120" rx="6" fill="#0D1B2A" stroke="#00B8D4" stroke-width="1"/>
+  <rect x="80" y="70" width="40" height="40" rx="4" fill="#00B8D4" opacity="0.3"/>
+  <rect x="160" y="70" width="40" height="40" rx="4" fill="#00B8D4" opacity="0.3"/>
+  <rect x="120" y="130" width="40" height="40" rx="4" fill="#00B8D4" opacity="0.3"/>
+  <path d="M100 90 L180 90" stroke="#00B8D4" stroke-width="2"/>
+  <path d="M140 110 L140 150" stroke="#00B8D4" stroke-width="2"/>
+  <path d="M160 90 L160 130" stroke="#00B8D4" stroke-width="2"/>
+  <rect x="290" y="50" width="260" height="120" rx="6" fill="#0D1B2A" stroke="#00B8D4" stroke-width="1"/>
+  <text x="310" y="80" font-family="monospace" font-size="14" fill="#00B8D4">Router(config)# interface g0/0</text>
+  <text x="310" y="105" font-family="monospace" font-size="14" fill="#FFFFFF">ip address 192.168.10.1 255.255.255.0</text>
+  <text x="310" y="130" font-family="monospace" font-size="14" fill="#FFFFFF">encapsulation dot1Q 10</text>
+  <text x="310" y="155" font-family="monospace" font-size="14" fill="#FFFFFF">no shutdown</text>
+  <rect x="30" y="240" width="540" height="80" rx="8" fill="#FFFFFF" stroke="#E0D3C1" stroke-width="2"/>
+  <rect x="50" y="260" width="500" height="14" rx="3" fill="#183153" opacity="0.1"/>
+  <rect x="50" y="285" width="300" height="10" rx="2" fill="#00B8D4"/>
+  <rect x="50" y="305" width="200" height="10" rx="2" fill="#E0D3C1"/>
+  <text x="300" y="335" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#183153">Cisco Packet Tracer Network Design</text>
+</svg>

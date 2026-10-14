@@ -1,60 +1,33 @@
-import Handwritten from "./scrapbook/Handwritten";
-import Reveal from "./ui/Reveal";
+import { motion } from "framer-motion";
+import { fadeUpVariant, staggerContainer, staggerItem } from "../utils/motion";
+import "./About.css";
 
 export default function About() {
   return (
-    <section id="about" className="about-section">
+    <section id="about" className="section section-alt about-section">
       <div className="container">
-        <Reveal className="section-heading" amount={0.25}>
-          <span className="section-kicker"> A LITTLE ABOUT ME</span>
-        </Reveal>
+        <motion.div
+          className="section-header"
+          variants={fadeUpVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          <span className="section-kicker">Background & Aspirations</span>
+          <h2 className="section-title">A Little About Me</h2>
+        </motion.div>
 
-        <div className="about-layout">
-          <Reveal
-            className="about-collage"
-            direction="left"
-            distance={32}
-          >
-            <img
-              className="about-photo"
-              src="/hero_avatar_cut.png"
-              alt="Ritu Dhakal"
-              loading="lazy"
-              decoding="async"
-              width={710}
-              height={977}
-            />
-          </Reveal>
-
-          <Reveal className="about-copy" direction="right" distance={28} delay={0.1}>
-            <p className="about-lead">
-              I&apos;m Ritu, a BSc CSIT student exploring networking and
-              cybersecurity through hands-on learning.
-            </p>
-
-            <p>
-              I&apos;ve always been interested in understanding how things
-              connect from the systems behind a website to the networks
-              that keep information moving. Lately, I&apos;ve been spending
-              more time learning about network security, threats, monitoring,
-              and how systems can be protected.
-            </p>
-
-            <p>
-              I like learning by doing, whether that means exploring a
-              security tool, understanding a network, or figuring out why
-              something works the way it does. I&apos;m still learning, but
-              that&apos;s probably the part I enjoy most.
-            </p>
-
-            <Handwritten
-              className="about-handnote"
-              rotation={-2}
-            >
-              currently exploring the world behind the screen ↗
-            </Handwritten>
-          </Reveal>
-        </div>
+        <motion.div
+          className="about-content"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          <motion.p variants={staggerItem} className="about-text-p">
+            Hi, I'm Ritu Dhakal, a Bachelor of Science in Computer Science and Information Technology (BSc CSIT) student at New Summit College, Kathmandu, Nepal. I have a strong interest in Networking and Cybersecurity, particularly in understanding network infrastructure, system security, and the technologies that keep digital environments connected and protected. I enjoy exploring new technologies, strengthening my technical knowledge, and developing practical skills through continuous learning and hands-on practice. I'm committed to expanding my understanding of the IT field, tackling technical challenges, and building a solid foundation for my future career in networking and cybersecurity.
+          </motion.p>
+        </motion.div>
       </div>
     </section>
   );

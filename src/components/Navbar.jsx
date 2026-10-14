@@ -1,186 +1,179 @@
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import "./Navbar.css";
 
-const links = [
-  { name: "Work", href: "#projects", id: "projects" },
-  { name: "About", href: "#about", id: "about" },
-  { name: "Exploring", href: "#exploring", id: "exploring" },
-  { name: "Education", href: "#education", id: "education" },
-  { name: "Certifications", href: "#certifications", id: "certifications" },
-  { name: "Contact", href: "#contact", id: "contact" },
+const NAV_LINKS = [
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Certificate", href: "#certificate" },
+  { name: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const toggleRef = useRef(null);
-  const menuRef = useRef(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const sections = ["home", "about", "projects", "exploring", "education", "certifications", "contact"]
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visible) {
-          setActiveSection(visible.target.id);
-        }
-      },
-      { rootMargin: "-30% 0px -55%", threshold: [0, 0.2, 0.5] },
-    );
-
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 16);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    window.dispatchEvent(new CustomEvent("portfolio:menu", { detail: { open } }));
-    return () => {
-      window.dispatchEvent(new CustomEvent("portfolio:menu", { detail: { open: false } }));
+    const sectionIds = NAV_LINKS.map((link) => link.href.slice(1));
+    const handleScrollSpy = () => {
+      const scrollPos = window.scrollY + 140;
+      let currentSection = sectionIds[0];
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            currentSection = id;
+            break;
+          }
+        }
+      }
+      setActiveSection(currentSection);
     };
-  }, [open]);
+
+    window.addEventListener("scroll", handleScrollSpy, { passive: true });
+    handleScrollSpy();
+    return () => window.removeEventListener("scroll", handleScrollSpy);
+  }, []);
 
   useEffect(() => {
-    if (!open) {
-      return undefined;
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      const handleKeyDown = (e) => {
+        if (e.key === "Escape") setIsOpen(false);
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    } else {
+      document.body.style.overflow = "";
     }
+  }, [isOpen]);
 
-    const previouslyFocused = document.activeElement;
-    const toggle = toggleRef.current;
-    const previousOverflow = document.body.style.overflow;
-    const focusFrame = window.requestAnimationFrame(() => {
-      menuRef.current?.querySelector("a")?.focus();
-    });
-    const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        setOpen(false);
-        return;
-      }
-
-      if (event.key !== "Tab") {
-        return;
-      }
-
-      const focusable = [...(menuRef.current?.querySelectorAll(focusableSelector) ?? [])];
-      if (focusable.length === 0) {
-        return;
-      }
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.cancelAnimationFrame(focusFrame);
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-      if (previouslyFocused instanceof HTMLElement && previouslyFocused.isConnected) {
-        previouslyFocused.focus();
-      } else {
-        toggle?.focus();
-      }
-    };
-  }, [open]);
-
-  const closeMenu = () => setOpen(false);
+  const handleLinkClick = () => {
+    setIsOpen(false);
+  };
 
   return (
     <>
-      <header className="site-header">
-        <div className="nav-shell">
-          <a className="brand" href="#home" aria-label="Ritu Dhakal — home">
-            <span className="brand-wordmark">RITU.</span>
-            <span className="brand-caption">digital scrapbook</span>
+      <motion.header
+        initial={{ y: -24, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className={`navbar-header ${isScrolled ? "is-scrolled" : ""}`}
+      >
+        <div className="navbar-container">
+          <a href="#home" className="navbar-logo" aria-label="Ritu Dhakal Home">
+            Ritu<span className="logo-dot">.</span>
           </a>
 
-          <nav className="nav-desktop" aria-label="Primary navigation">
-            {links.map((link) => (
-              <a
-                className={activeSection === link.id ? "active" : ""}
-                href={link.href}
-                aria-current={activeSection === link.id ? "location" : undefined}
-                key={link.href}
-              >
-                <span>{link.name}</span>
-                <ArrowUpRight size={13} aria-hidden="true" />
-              </a>
-            ))}
-          </nav>
-
-          <button
-            ref={toggleRef}
-            className="menu-toggle"
-            type="button"
-            onClick={() => setOpen((current) => !current)}
-            aria-expanded={open}
-            aria-controls="mobile-navigation"
-            aria-label={open ? "Close navigation" : "Open navigation"}
-          >
-            {open ? <X size={21} /> : <span className="menu-lines" aria-hidden="true" />}
-          </button>
-        </div>
-      </header>
-
-      <AnimatePresence>
-        {open && (
-          <>
-            <motion.button
-              className="menu-overlay"
-              type="button"
-              aria-label="Close navigation"
-              onClick={closeMenu}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            />
-            <motion.nav
-              ref={menuRef}
-              id="mobile-navigation"
-              className="mobile-menu"
-              aria-label="Mobile navigation"
-              initial={{ opacity: 0, y: -12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {links.map((link) => (
+          <nav className="navbar-nav" aria-label="Main Navigation">
+            {NAV_LINKS.map((link) => {
+              const isActive = activeSection === link.href.slice(1);
+              return (
                 <a
-                  className={activeSection === link.id ? "active" : ""}
+                  key={link.name}
                   href={link.href}
-                  aria-current={activeSection === link.id ? "location" : undefined}
-                  onClick={closeMenu}
-                  key={link.href}
+                  className={`navbar-link ${isActive ? "active" : ""}`}
+                  aria-current={isActive ? "page" : undefined}
                 >
                   {link.name}
-                  <ArrowUpRight size={16} aria-hidden="true" />
                 </a>
-              ))}
-              <a className="mobile-email" href="mailto:dhakalreetu05@gmail.com" onClick={closeMenu}>
-                Let&apos;s talk <ArrowUpRight size={16} aria-hidden="true" />
+              );
+            })}
+          </nav>
+
+          <div className="navbar-actions">
+            <motion.a
+              href="#contact"
+              className="btn btn-primary navbar-cta"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Let's Connect
+            </motion.a>
+
+            <button
+              type="button"
+              className="navbar-toggle"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
+            >
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* Mobile Drawer Menu */}
+      <div
+        className={`mobile-backdrop ${isOpen ? "open" : ""}`}
+        onClick={() => setIsOpen(false)}
+        aria-hidden="true"
+      />
+
+      <div
+        id="mobile-navigation"
+        className={`mobile-drawer ${isOpen ? "open" : ""}`}
+        aria-label="Mobile Navigation Menu"
+      >
+        <div className="mobile-drawer-header">
+          <span className="mobile-drawer-logo">
+            RD<span className="logo-dot">.</span>
+          </span>
+          <button
+            type="button"
+            className="mobile-close-btn"
+            onClick={() => setIsOpen(false)}
+            aria-label="Close navigation menu"
+          >
+            <X size={22} />
+          </button>
+        </div>
+
+        <nav className="mobile-nav-links">
+          {NAV_LINKS.map((link) => {
+            const isActive = activeSection === link.href.slice(1);
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                className={`mobile-nav-link ${isActive ? "active" : ""}`}
+                onClick={handleLinkClick}
+              >
+                {link.name}
               </a>
-            </motion.nav>
-          </>
-        )}
-      </AnimatePresence>
+            );
+          })}
+        </nav>
+
+        <div className="mobile-drawer-footer">
+          <a
+            href="#contact"
+            className="btn btn-primary mobile-cta"
+            onClick={handleLinkClick}
+          >
+            Let's Connect
+          </a>
+        </div>
+      </div>
     </>
   );
 }

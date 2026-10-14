@@ -1,0 +1,29 @@
+/* About Section */
+.about-section {
+  background-color: var(--bg-alt);
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-text-p {
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-text-p {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+}
