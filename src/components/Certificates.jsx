@@ -1,11 +1,25 @@
 import { motion } from "framer-motion";
 import { learningItems } from "../data/certificates";
-import { BookOpen, CheckCircle2, Clock, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import TiltCard from "./TiltCard";
 import { fadeUpVariant, staggerContainer, staggerItem } from "../utils/motion";
 import "./Certificates.css";
 
 export default function Certificates() {
+  const scrollContainerRef = (el) => {
+    if (el) {
+      el.style.scrollBehavior = "smooth";
+    }
+  };
+
+  const scrollLeft = (container) => {
+    container.scrollBy({ left: -300, behavior: "smooth" });
+  };
+
+  const scrollRight = (container) => {
+    container.scrollBy({ left: 300, behavior: "smooth" });
+  };
+
   return (
     <section id="learning" className="section section-alt certificates-section">
       <div id="certificates" style={{ position: "absolute", top: 0 }} aria-hidden="true" />
@@ -18,69 +32,71 @@ export default function Certificates() {
           viewport={{ once: true, margin: "-60px" }}
         >
           <span className="section-kicker">Skill Development</span>
-          <h2 className="section-title">Learning &amp; Certifications</h2>
+          <h2 className="section-title">Learning & Certifications</h2>
           <p className="section-desc">
             University coursework completed and hands-on learning platforms I am actively studying as a fresher.
           </p>
         </motion.div>
 
-        <motion.div
-          className="learning-cards-grid"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          {learningItems.map((item) => (
-            <motion.div key={item.id} variants={staggerItem}>
-              <TiltCard maxTilt={5} scale={1.015}>
-                <article className={`learning-card-item ${item.isCompleted ? "is-completed" : "is-learning"}`}>
-                  <div className="learning-card-top">
-                    <span className="learning-provider-tag">{item.provider}</span>
-                    <span className={`badge-status ${item.isCompleted ? "completed" : "learning"}`}>
-                      {item.isCompleted ? (
-                        <><CheckCircle2 size={13} /> {item.status}</>
+        <div className="certificates-carousel-wrapper" ref={scrollContainerRef}>
+          <button
+            type="button"
+            className="carousel-nav prev"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollLeft(e.currentTarget.parentElement.querySelector(".certificates-carousel"));
+            }}
+            aria-label="Scroll certificates left"
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          <motion.div
+            className="certificates-carousel"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            {learningItems.map((item) => (
+              <motion.div key={item.id} variants={staggerItem} className="certificate-slide">
+                <TiltCard maxTilt={5} scale={1.01}>
+                  <article className={`certificate-card ${item.isCompleted ? "is-completed" : "is-learning"}`}>
+                    <div className="certificate-image-wrapper">
+                      {item.image ? (
+                        <img
+                          src={item.image}
+                          alt={`${item.title} certificate`}
+                          className="certificate-image"
+                          loading="lazy"
+                        />
                       ) : (
-                        <><Clock size={13} /> {item.status}</>
+                        <div className="certificate-image-placeholder">
+                          <span className="placeholder-text">{item.title.split(" ")[0]}</span>
+                        </div>
                       )}
-                    </span>
-                  </div>
+                    </div>
 
-                  <h3 className="learning-item-title">{item.title}</h3>
-                  <p className="learning-item-desc">{item.description}</p>
+                    <div className="certificate-content">
+                      <h3 className="certificate-title">{item.title}</h3>
+                    </div>
+                  </article>
+                </TiltCard>
+              </motion.div>
+            ))}
+          </motion.div>
 
-                  <div className="learning-topics-group">
-                    {item.topics.map((t) => (
-                      <span key={t} className="tech-tag">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="learning-card-bottom">
-                    <span className="learning-date-info">
-                      <BookOpen size={13} /> {item.date}
-                    </span>
-
-                    {item.link && (
-                      <motion.a
-                        href={item.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-secondary btn-sm"
-                        whileHover={{ y: -1 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <span>{item.linkLabel || "View Platform"}</span>
-                        <ExternalLink size={12} className="btn-arrow" />
-                      </motion.a>
-                    )}
-                  </div>
-                </article>
-              </TiltCard>
-            </motion.div>
-          ))}
-        </motion.div>
+          <button
+            type="button"
+            className="carousel-nav next"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollRight(e.currentTarget.parentElement.querySelector(".certificates-carousel"));
+            }}
+            aria-label="Scroll certificates right"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
       </div>
     </section>
   );

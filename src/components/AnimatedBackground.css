@@ -1,4 +1,3 @@
-/* Animated Background */
 .animated-bg-container {
   position: fixed;
   inset: 0;
@@ -21,7 +20,6 @@
   top: -100px;
   left: -100px;
   background: var(--orb-color-1);
-  animation-delay: 0s;
 }
 
 .orb-2 {
@@ -52,10 +50,6 @@
 
 .bg-line-anim {
   animation: line-draw 30s linear infinite;
-}
-
-.line-1 {
-  animation-delay: 0s;
 }
 
 .line-2 {

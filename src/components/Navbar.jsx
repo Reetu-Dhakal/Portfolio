@@ -4,10 +4,10 @@ import { Menu, X } from "lucide-react";
 import "./Navbar.css";
 
 const NAV_LINKS = [
+  { name: "Story", href: "#story" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Certificate", href: "#certificate" },
+  { name: "Work", href: "#work" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -15,18 +15,10 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 16);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   useEffect(() => {
     const sectionIds = NAV_LINKS.map((link) => link.href.slice(1));
     const handleScrollSpy = () => {
+      setIsScrolled(window.scrollY > 24);
       const scrollPos = window.scrollY + 140;
       let currentSection = sectionIds[0];
 
@@ -72,9 +64,9 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        initial={{ y: -24, opacity: 0 }}
+        initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         className={`navbar-header ${isScrolled ? "is-scrolled" : ""}`}
       >
         <div className="navbar-container">
@@ -99,15 +91,6 @@ export default function Navbar() {
           </nav>
 
           <div className="navbar-actions">
-            <motion.a
-              href="#contact"
-              className="btn btn-primary navbar-cta"
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Let's Connect
-            </motion.a>
-
             <button
               type="button"
               className="navbar-toggle"
@@ -121,6 +104,7 @@ export default function Navbar() {
           </div>
         </div>
       </motion.header>
+      
 
       {/* Mobile Drawer Menu */}
       <div
@@ -133,6 +117,7 @@ export default function Navbar() {
         id="mobile-navigation"
         className={`mobile-drawer ${isOpen ? "open" : ""}`}
         aria-label="Mobile Navigation Menu"
+        aria-hidden={!isOpen}
       >
         <div className="mobile-drawer-header">
           <span className="mobile-drawer-logo">
@@ -163,16 +148,6 @@ export default function Navbar() {
             );
           })}
         </nav>
-
-        <div className="mobile-drawer-footer">
-          <a
-            href="#contact"
-            className="btn btn-primary mobile-cta"
-            onClick={handleLinkClick}
-          >
-            Let's Connect
-          </a>
-        </div>
       </div>
     </>
   );

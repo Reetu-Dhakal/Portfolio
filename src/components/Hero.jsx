@@ -1,55 +1,56 @@
 import { ArrowUpRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { staggerContainer, staggerItem } from "../utils/motion";
+import MagneticLink from "./MagneticLink";
+import SplitText from "./SplitText";
 import "./Hero.css";
 
 export default function Hero() {
   return (
     <section id="home" className="hero-section">
       <div className="container hero-container">
-        {/* Left: Greeting, introduction, paragraph, buttons */}
-        <div className="hero-left">
-          <span className="hero-greeting">Hi!</span>
-
-          <div className="hero-typing-container">
-            <span className="hero-intro-script">I'm</span>
-          </div>
-
-          <p className="hero-role">Networking &amp; Cybersecurity Enthusiast</p>
-          <p className="hero-tagline">
-            Building secure, scalable systems. Passionate about network architecture,
-            cloud security, and open-source contributions.
-          </p>
-
-          <div className="hero-cta-group">
-            <a className="hero-btn hero-btn-primary" href="#projects">
-              <span>Explore My work</span>
-              <ArrowUpRight size={15} aria-hidden="true" />
-            </a>
-            <a className="hero-btn hero-btn-secondary" href="#contact">
+        <motion.div
+          className="hero-copy"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.p variants={staggerItem} className="hero-eyebrow">
+            BSc CSIT Student · Aspiring Software Developer
+          </motion.p>
+          <motion.h1 variants={staggerItem} className="hero-name">
+            <SplitText>Ritu</SplitText>
+            <SplitText className="hero-name-last">Dhakal</SplitText>
+          </motion.h1>
+          <motion.p variants={staggerItem} className="hero-lede">
+            A curious mind who loves computers and technology. I learn by
+            building practical projects and turning ideas into real solutions.
+          </motion.p>
+          <motion.div variants={staggerItem} className="hero-cta-group">
+            <MagneticLink className="hero-btn hero-btn-primary" href="#work">
+              Explore my work <ArrowUpRight size={15} aria-hidden="true" />
+            </MagneticLink>
+            <MagneticLink className="hero-btn hero-btn-secondary" href="#contact">
               Get in touch
-            </a>
-          </div>
-        </div>
+            </MagneticLink>
+          </motion.div>
+        </motion.div>
 
-        {/* Center: Photo */}
-        <div className="hero-photo-wrapper">
-          <div className="hero-photo">
-            <img
-              src="/hero_avatar.png"
-              alt="Portrait of Ritu Dhakal"
-              width="896"
-              height="1196"
-              fetchPriority="high"
-            />
-          </div>
-        </div>
+        <motion.div
+          className="hero-portrait"
+          initial={{ opacity: 0, y: 24, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <img
+            src="/hero_avatar.png"
+            alt="Portrait of Ritu Dhakal"
+            width="896"
+            height="1196"
+            fetchPriority="high"
+          />
+        </motion.div>
 
-        {/* Right: Name */}
-        <div className="hero-right">
-          <h1 className="hero-name">
-            <span className="hero-name-first">Ritu</span>
-            <span className="hero-name-last">Dhakal</span>
-          </h1>
-        </div>
       </div>
     </section>
   );

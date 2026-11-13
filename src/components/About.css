@@ -1,29 +1,102 @@
-/* About Section */
-.about-section {
-  background-color: var(--bg-alt);
+.story-section {
+  padding-top: 58px;
+  background: var(--bg-main);
 }
 
-.about-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
+.story-header { margin-bottom: 32px; }
+
+.story-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  max-width: 1000px;
 }
 
-.about-text-p {
-  font-size: 17px;
-  line-height: 1.85;
+.story-timeline::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+.story-entry {
+  position: relative;
+  display: grid;
+  grid-template-rows: 34px 1fr;
+  gap: 24px;
+  padding-top: 0;
+}
+
+.story-entry-marker {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--text-primary);
+  border-radius: 50%;
+  background: var(--bg-main);
+}
+
+.story-entry-label {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  width: fit-content;
+  padding-right: 12px;
+  background: var(--bg-main);
+  padding-left: 22px;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.story-entry-content { padding-right: 20px; }
+
+.story-entry-content h3 {
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
+
+.story-entry-content p {
+  max-width: 290px;
   color: var(--text-secondary);
-  text-align: justify;
-  text-justify: inter-word;
+  font-size: 15px;
+  line-height: 1.65;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .about-text-p {
-    font-size: 16px;
-    line-height: 1.8;
+@media (max-width: 700px) {
+  .story-timeline {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
+
+  .story-timeline::before {
+    top: 0;
+    bottom: 0;
+    left: 4px;
+    width: 1px;
+    height: auto;
+  }
+
+  .story-entry {
+    grid-template-rows: auto auto;
+    gap: 12px;
+    padding: 0 0 34px 28px;
+  }
+
+  .story-entry-marker { top: 3px; left: 0; }
+  .story-entry-label { padding-left: 0; }
+  .story-entry-content { padding-right: 0; }
 }

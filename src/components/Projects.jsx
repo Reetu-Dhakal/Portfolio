@@ -1,14 +1,13 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { featuredProjects } from "../data/projects";
-import { ExternalLink, FolderGit2, ChevronLeft, ChevronRight } from "lucide-react";
-import TiltCard from "./TiltCard";
 import { fadeUpVariant, staggerContainer, staggerItem } from "../utils/motion";
 import "./Projects.css";
 
 const GithubIcon = () => (
   <svg
-    width="16"
-    height="16"
+    width="15"
+    height="15"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -22,22 +21,10 @@ const GithubIcon = () => (
 );
 
 export default function Projects() {
-  const scrollContainerRef = (el) => {
-    if (el) {
-      el.style.scrollBehavior = "smooth";
-    }
-  };
-
-  const scrollLeft = (container) => {
-    container.scrollBy({ left: -300, behavior: "smooth" });
-  };
-
-  const scrollRight = (container) => {
-    container.scrollBy({ left: 300, behavior: "smooth" });
-  };
+  const reduceMotion = useReducedMotion();
 
   return (
-    <section id="projects" className="section section-alt projects-section">
+    <section id="work" className="section projects-section">
       <div className="container">
         <motion.div
           className="section-header"
@@ -46,89 +33,68 @@ export default function Projects() {
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
         >
-          <span className="section-kicker">Hands-on Experience</span>
-          <h2 className="section-title">Projects & Practical Labs</h2>
+          <span className="section-kicker">04 — Work</span>
+          <h2 className="section-title">Things I&apos;ve built</h2>
+          <p className="section-desc">Projects that reflect my learning journey.</p>
         </motion.div>
 
-        <div className="projects-carousel-wrapper" ref={scrollContainerRef}>
-          <button
-            type="button"
-            className="carousel-nav prev"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollLeft(e.currentTarget.parentElement.querySelector(".projects-carousel"));
-            }}
-            aria-label="Scroll projects left"
-          >
-            <ChevronLeft size={20} />
-          </button>
+        <motion.div
+          className="project-list"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+        >
+          {featuredProjects.map((project, index) => (
+            <motion.article
+              className="project-row"
+              variants={staggerItem}
+              whileHover={reduceMotion ? undefined : { y: -6, rotate: index % 3 === 2 ? 0 : -0.4 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.99 }}
+              key={project.id}
+            >
+              <div className="project-row-copy">
+                <span className="project-number">0{index + 1}</span>
+                <div className="project-row-details">
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  <div className="project-tags" aria-label={`${project.title} technologies`}>
+                    {project.technologies.map((technology) => (
+                      <span key={technology}>{technology}</span>
+                    ))}
+                  </div>
+                  <div className="project-row-link">
+                    {project.github ? (
+                      <a href={project.github} target="_blank" rel="noopener noreferrer">
+                        <GithubIcon />
+                        View project <ArrowUpRight size={14} aria-hidden="true" />
+                      </a>
+                    ) : (
+                      <span>Practical lab</span>
+                    )}
+                  </div>
+                </div>
+              </div>
 
-          <motion.div
-            className="projects-carousel"
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-          >
-            {featuredProjects.map((project) => (
-              <motion.div key={project.id} variants={staggerItem} className="project-slide">
-                <TiltCard maxTilt={5} scale={1.012}>
-                  <article className="project-card">
-                    <div className="project-image-wrapper">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="project-image"
-                        loading="lazy"
-                      />
-                    </div>
-
-                    <div className="project-content">
-                      <h3 className="project-title">{project.title}</h3>
-                      <p className="project-description">{project.description}</p>
-
-                      <div className="project-actions">
-                        {project.github ? (
-                          <motion.a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-primary btn-sm project-btn"
-                            whileHover={{ y: -2 }}
-                            whileTap={{ scale: 0.98 }}
-                          >
-                            <GithubIcon />
-                            <span>View Source Code</span>
-                            <ExternalLink size={13} className="btn-arrow" />
-                          </motion.a>
-                        ) : (
-                          <span className="lab-notice">
-                            <FolderGit2 size={14} /> Lab setup in progress · Notes being documented
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </article>
-                </TiltCard>
+              <motion.div
+                className="project-row-image"
+                initial={reduceMotion ? false : { clipPath: "inset(0 100% 0 0)" }}
+                whileInView={reduceMotion ? undefined : { clipPath: "inset(0 0% 0 0)" }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {project.image ? (
+                  <img src={project.image} alt={project.title} loading="lazy" />
+                ) : (
+                  <div className="project-image-placeholder" aria-label={`${project.title} preview unavailable`}>
+                    <span>{project.title}</span>
+                  </div>
+                )}
+                <span className="project-image-hover">View project</span>
               </motion.div>
-            ))}
-          </motion.div>
-
-          <button
-            type="button"
-            className="carousel-nav next"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollRight(e.currentTarget.parentElement.querySelector(".projects-carousel"));
-            }}
-            aria-label="Scroll projects right"
-          >
-            <ChevronRight size={20} />
-          </button>
-        </div>
-
-        <div className="scroll-hint" aria-hidden="true">
-          Scroll horizontally →
-        </div>
+            </motion.article>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

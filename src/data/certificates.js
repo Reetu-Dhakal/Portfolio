@@ -16,6 +16,7 @@ export const learningItems = [
     topics: ["Network Protocols", "Web Vulnerabilities", "Linux Command Line", "Defensive Security"],
     link: "https://tryhackme.com",
     linkLabel: "TryHackMe Platform",
+    image: "https://picsum.photos/seed/tryhackme-cert/400/220.jpg",
   },
   {
     id: "cisco-packet-tracer",
@@ -29,6 +30,7 @@ export const learningItems = [
     topics: ["Cisco Packet Tracer", "IPv4 Subnetting", "VLAN Configuration", "Router Setup"],
     link: null,
     linkLabel: null,
+    image: "https://picsum.photos/seed/cisco-packet-tracer-cert/400/220.jpg",
   },
   {
     id: "fullstack-curriculum",
@@ -42,10 +44,11 @@ export const learningItems = [
     topics: ["Full-Stack Architecture", "Relational & NoSQL Databases", "REST APIs", "Modern JS"],
     link: null,
     linkLabel: null,
+    image: "https://picsum.photos/seed/fullstack-cert/400/220.jpg",
   },
   {
     id: "ccna-study-goal",
-    title: "Cisco Certified Network Associate (CCNA 200-301) Study",
+    title: "Cisco CCNA (200-301) Study",
     provider: "Self-Paced Study Goal",
     status: "Currently Learning",
     isCompleted: false,
@@ -55,6 +58,7 @@ export const learningItems = [
     topics: ["IP Connectivity", "Routing Protocols", "Switching Mechanisms", "Network Assurance"],
     link: null,
     linkLabel: null,
+    image: "https://picsum.photos/seed/ccna-cert/400/220.jpg",
   },
 ];
 

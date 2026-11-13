@@ -4,39 +4,28 @@
 
 export const featuredProjects = [
   {
-    id: "network-traffic-analysis",
-    title: "Network Traffic Analysis",
-    description: "Capturing and analyzing live/PCAP packets with Wireshark to inspect TCP handshakes, DNS, ARP, ICMP, and HTTP/HTTPS headers.",
-    github: null,
-    image: "/projects/wireshark-analysis.svg",
-  },
-  {
-    id: "cybersecurity-practice-lab",
-    title: "Cybersecurity Practice Lab",
-    description: "Hands-on TryHackMe labs covering Linux CLI, file permissions, privilege escalation, and OWASP Top 10 vulnerabilities.",
-    github: null,
-    image: "/projects/tryhackme-lab.svg",
-  },
-  {
-    id: "small-network-design",
-    title: "Small Network Design & Simulation",
-    description: "Designing hierarchical office networks in Cisco Packet Tracer with VLSM subnetting, VLANs, and inter-VLAN routing.",
-    github: null,
-    image: "/projects/packet-tracer-design.svg",
-  },
-  {
     id: "hamro-menu",
     title: "HamroMenu — Digital Restaurant Platform",
-    description: "QR-based restaurant ordering platform with digital menus, kitchen workflow, table management, and admin dashboards.",
+    description: "A digital restaurant ordering platform with digital menus, kitchen workflow, table management and admin dashboards.",
+    technologies: ["React", "Node.js", "MongoDB"],
     github: "https://github.com/Reetu-Dhakal/Hamro_Menu",
-    image: "/projects/hamromenu.svg",
+    image: "/projects/Hamromenu.png",
   },
   {
     id: "kala-bazzar",
     title: "KalaBazzar Nepal — Artisan Marketplace",
-    description: "Multi-vendor e-commerce marketplace for Nepali artisans with seller onboarding, product catalogs, cart, checkout, and order tracking.",
+    description: "A multi-vendor e-commerce marketplace for Nepali artisans to sell their handmade products, crafts, artwork and creative merchandise.",
+    technologies: ["React", "Node.js", "Database"],
     github: "https://github.com/Reetu-Dhakal/KalaBazzar",
-    image: "/projects/kalabazzar.svg",
+    image: "/projects/Kalabazar.png",
+  },
+  {
+    id: "balswasthya",
+    title: "Balswasthya",
+    description: "A Laravel-based e-Governance platform for child vaccination registration, immunization tracking, vaccine scheduling, and healthcare facility management, designed to strengthen public healthcare services in Nepal.",
+    technologies: ["PHP", "Laravel", "MySQL", "React"],
+    github: "https://github.com/Reetu-Dhakal/Balswasthya",
+    image: "/projects/Balswasthya.png",
   },
 ];
 

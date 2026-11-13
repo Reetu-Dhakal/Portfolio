@@ -1,13 +1,25 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { SiGmail } from "react-icons/si";
+import { ArrowUpRight, Mail } from "lucide-react";
 import { init, send } from "@emailjs/browser";
 import { fadeUpVariant } from "../utils/motion";
 import "./Contact.css";
 
 const EMAIL = "dhakalreetu05@gmail.com";
+
+const GithubIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+  </svg>
+);
+
+const LinkedinIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
 
 // EmailJS config - REPLACE THESE WITH YOUR ACTUAL VALUES
 const EMAILJS_PUBLIC_KEY = "uIGl13-5BvUjNT-p1";      // From EmailJS Account > API Keys
@@ -74,46 +86,42 @@ export default function Contact() {
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
         >
-          <span className="contact-kicker">Say hello</span>
+          <span className="contact-kicker">05 — Contact</span>
           <h2 className="contact-title">
             Got something
             <span className="contact-title-accent">to say?</span>
           </h2>
 
-          <div className="contact-icons">
+          <div className="contact-icons" role="list" aria-label="Contact links">
             <a
-              className="contact-icon-link contact-icon-gmail"
+              className="contact-icon-link"
               href={`mailto:${EMAIL}`}
               aria-label="Send me an email"
-              title="Email"
             >
-              <SiGmail size={28} aria-hidden="true" />
+              <Mail size={22} aria-hidden="true" />
             </a>
             <a
-              className="contact-icon-link contact-icon-github"
+              className="contact-icon-link"
               href="https://github.com/Reetu-Dhakal"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub profile"
-              title="GitHub"
             >
-              <FaGithub size={30} aria-hidden="true" />
+              <GithubIcon aria-hidden="true" />
             </a>
             <a
-              className="contact-icon-link contact-icon-linkedin"
+              className="contact-icon-link"
               href="https://www.linkedin.com/in/ritu-d-563669300/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn profile"
-              title="LinkedIn"
             >
-              <FaLinkedin size={30} aria-hidden="true" />
+              <LinkedinIcon aria-hidden="true" />
             </a>
           </div>
 
           <p className="contact-intro">
-            I'm always happy to talk about projects, ideas, networking, security,
-            or whatever you're currently figuring out.
+            Let&apos;s connect! Feel free to reach out.
           </p>
 
           <a className="contact-btn" href={`mailto:${EMAIL}`}>
